@@ -17,21 +17,21 @@ const hideAlert = function () {
   alert.innerHTML = ''
 }
 
-// Add output div to the DOM to display the family members
+// Add output div to the DOM to display the household members
 const outputDiv = document.createElement("div")
 theForm.appendChild(outputDiv)
 
-// Define our ID counter for later ID tracking of family members
+// Define our ID counter for later ID tracking of household members
 let idCounter = 0
 
 // Define our object that will later be used for our JSON API call.
-const familyObject = { family: [] }
+const householdObject = { household: [] }
 
-// Define the function for deleting family members.
+// Define the function for deleting household members.
 const deleteEntry = function (event) {
-  let objectToDelete = familyObject.family.find(person => person.id == event.target.parentElement.id)
-  // This deletes the entry from the familyObject.
-  familyObject.family.splice(familyObject.family.indexOf(objectToDelete), 1)
+  let objectToDelete = householdObject.household.find(person => person.id == event.target.parentElement.id)
+  // This deletes the entry from the householdObject.
+  householdObject.household.splice(householdObject.household.indexOf(objectToDelete), 1)
   // This removes the entry from the DOM.
   event.target.parentElement.remove()
 }
@@ -74,8 +74,8 @@ addButton.addEventListener("click", (event) => {
       newPersonDiv.appendChild(deleteButton)
       // Assign our id to our div for use in our deleteEntry function
       newPersonDiv.id = idCounter
-      // Add the new entry to the familyObject
-      familyObject.family.push({ id: idCounter, age: ageInput.value, relationship: relationshipInput.value, smoker: smokerInput.checked})
+      // Add the new entry to the householdObject
+      householdObject.household.push({ id: idCounter, age: ageInput.value, relationship: relationshipInput.value, smoker: smokerInput.checked})
       // Clear the input form so it's ready for another entry
       ageInput.value = null
       relationshipInput.value = null
@@ -86,10 +86,10 @@ addButton.addEventListener("click", (event) => {
 // Submit form event listener
 theForm.addEventListener("submit", (event) => {
   event.preventDefault()
-  // Convert familyObject to JSON and store it in a variable.
-  let familyJSON = JSON.stringify(familyObject)
+  // Convert householdObject to JSON and store it in a variable.
+  let householdJSON = JSON.stringify(householdObject)
   // Populate the debug element with the resulting JSON.
-  document.getElementsByClassName('debug')[0].innerHTML = familyJSON
+  document.getElementsByClassName('debug')[0].innerHTML = householdJSON
   // Inform the user of success.
   alert.innerHTML = "Your household data has been submitted. Thank you."
   // Hide this submission alert after 3 seconds.
