@@ -12,6 +12,11 @@ addButton.type = 'button' // prevents add button from submitting form.
 const alert = document.createElement("h2")
 theDiv.insertBefore(alert, theDiv.firstChild)
 
+// Define hideAlert function to hide the alert when needed.
+const hideAlert = function () {
+  alert.innerHTML = ''
+}
+
 // Add output div to the DOM to display the family members
 const outputDiv = document.createElement("div")
 theForm.appendChild(outputDiv)
@@ -44,7 +49,7 @@ addButton.addEventListener("click", (event) => {
       // Increase the ID counter for later assigning to this entry.
       idCounter++
       // Remove any extraneous alerts.
-      alert.innerHTML = ''
+      hideAlert()
       // Create new elements to display the new member's information.
       let newPersonDiv = document.createElement("div")
       newPersonDiv.setAttribute("style", "border: 3px solid black; padding: 4px;")
@@ -85,4 +90,9 @@ theForm.addEventListener("submit", (event) => {
   let familyJSON = JSON.stringify(familyObject)
   // Populate the debug element with the resulting JSON.
   document.getElementsByClassName('debug')[0].innerHTML = familyJSON
+  // Inform the user of success.
+  alert.innerHTML = "Your household data has been submitted. Thank you."
+  // Hide this submission alert after 3 seconds.
+  window.setTimeout('hideAlert()', 3000)
+
 })
