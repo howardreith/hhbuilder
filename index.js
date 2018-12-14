@@ -25,7 +25,7 @@ addButton.addEventListener("click", (event) => {
       console.log(typeof(+ageInput.value))
       alert.innerHTML = ''
       let newPersonDiv = document.createElement("div")
-      newPersonDiv.setAttribute("style", "border-width: 5px;")
+      newPersonDiv.setAttribute("style", "border: 3px solid black;")
       let outputAge = document.createElement("p")
       let outputRelationship = document.createElement("p")
       let outputSmoker = document.createElement("p")
