@@ -17,6 +17,13 @@ let idCounter = 0
 const personObject = { family: []
 }
 
+const deleteEntry = function (event) {
+  let objectToDelete = personObject.family.find(person => person.id == event.target.parentElement.id)
+  personObject.family.splice(personObject.family.indexOf(objectToDelete), 1)
+  event.target.parentElement.remove()
+  console.log(personObject)
+}
+
 addButton.addEventListener("click", (event) => {
   console.log('Add Button Clicked')
   if(+ageInput.value <= 0) {
@@ -38,6 +45,7 @@ addButton.addEventListener("click", (event) => {
       deleteButton.innerHTML = 'Delete'
       deleteButton.id = 'delete_' + idCounter
       deleteButton.classList.add('delete_button')
+      deleteButton.addEventListener('click', deleteEntry, false)
       outputAge.innerHTML = "Age: " + ageInput.value
       outputRelationship.innerHTML = "Relationship: " + relationshipInput.value
       outputSmoker.innerHTML = "Smoker? " + smokerInput.checked
@@ -46,7 +54,7 @@ addButton.addEventListener("click", (event) => {
       newPersonDiv.appendChild(outputAge)
       newPersonDiv.appendChild(outputSmoker)
       newPersonDiv.appendChild(deleteButton)
-      newPersonDiv.id = 'person ' + idCounter
+      newPersonDiv.id = idCounter
       personObject.family.push({ id: idCounter, age: ageInput.value, relationship: relationshipInput.value, smoker: smokerInput.checked})
       ageInput.value = null
       relationshipInput.value = null
