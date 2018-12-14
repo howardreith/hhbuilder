@@ -1,5 +1,6 @@
 'use strict'
 
+// Assign variables to the important HTML elements.
 const theForm = document.getElementsByTagName("form")[0]
 const theDiv = document.getElementsByClassName("builder")[0]
 const ageInput = document.getElementsByTagName("input")[0]
@@ -8,44 +9,55 @@ const relationshipInput = document.getElementsByTagName("select")[0]
 const smokerInput = document.getElementsByName("smoker")[0]
 const addButton = document.getElementsByClassName("add")[0]
 addButton.type = 'button' // prevents add button from submitting form.
+
+// Add alert element to the DOM
 const alert = document.createElement("h2")
-const outputDiv = document.createElement("div")
 theDiv.appendChild(alert)
+
+// Add output div to the DOM to display the family members
+const outputDiv = document.createElement("div")
 theForm.appendChild(outputDiv)
 
+// Define our ID counter for later ID tracking of family members
 let idCounter = 0
-const personObject = { family: []
-}
 
+// Define our object that will later be used for our JSON API call.
+const personObject = { family: [] }
+
+// Define the function for deleting family members.
 const deleteEntry = function (event) {
   let objectToDelete = personObject.family.find(person => person.id == event.target.parentElement.id)
+  // This deletes the entry from the personObject.
   personObject.family.splice(personObject.family.indexOf(objectToDelete), 1)
+  // This removes the entry from the DOM.
   event.target.parentElement.remove()
-  console.log(personObject)
 }
 
 addButton.addEventListener("click", (event) => {
-  console.log('Add Button Clicked')
+  // Verify the age input is greater than 0.
   if(+ageInput.value <= 0) {
       alert.innerHTML = "Please enter an age that is greater than 0."
       return false
+  // Verify the relationship has been input.
   } else if (!relationshipInput.value) {
-      alert.innerHTML = "Please select a relationship status."
+      alert.innerHTML = "Please select a relationship."
       return false
   } else {
+      // Increase the ID counter for later assigning to this entry.
       idCounter++
+      // Remove any extraneous alerts.
       alert.innerHTML = ''
+      // Create new elements to display the new member's information.
       let newPersonDiv = document.createElement("div")
       newPersonDiv.setAttribute("style", "border: 3px solid black;")
       let outputAge = document.createElement("p")
       let outputRelationship = document.createElement("p")
       let outputSmoker = document.createElement("p")
+      // Create this div's delete button.
       let deleteButton = document.createElement("button")
-      deleteButton.type = 'button' // Prevents delete buttom from submitting form
-      deleteButton.innerHTML = 'Delete'
-      deleteButton.id = 'delete_' + idCounter
-      deleteButton.classList.add('delete_button')
+      // Add the click listener that runs our deleteEntry function.
       deleteButton.addEventListener('click', deleteEntry, false)
+      // Populate our new elements with the data input by the user.
       outputAge.innerHTML = "Age: " + ageInput.value
       outputRelationship.innerHTML = "Relationship: " + relationshipInput.value
       outputSmoker.innerHTML = "Smoker? " + smokerInput.checked
@@ -53,13 +65,18 @@ addButton.addEventListener("click", (event) => {
       newPersonDiv.appendChild(outputRelationship)
       newPersonDiv.appendChild(outputAge)
       newPersonDiv.appendChild(outputSmoker)
+      // Add details to delete button and append it to the DOM.
+      deleteButton.type = 'button' // Prevents delete buttom from submitting form
+      deleteButton.innerHTML = 'Delete'
       newPersonDiv.appendChild(deleteButton)
+      // Assign our id to our div for use in our deleteEntry function
       newPersonDiv.id = idCounter
+      // Add the new entry to the personObject
       personObject.family.push({ id: idCounter, age: ageInput.value, relationship: relationshipInput.value, smoker: smokerInput.checked})
+      // Clear the input form so it's ready for another entry
       ageInput.value = null
       relationshipInput.value = null
       smokerInput.checked = false
-      console.log(personObject)
   }
 })
 
