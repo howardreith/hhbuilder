@@ -33,6 +33,11 @@ addButton.addEventListener("click", (event) => {
       let outputAge = document.createElement("p")
       let outputRelationship = document.createElement("p")
       let outputSmoker = document.createElement("p")
+      let deleteButton = document.createElement("button")
+      deleteButton.type = 'button' // Prevents delete buttom from submitting form
+      deleteButton.innerHTML = 'Delete'
+      deleteButton.id = 'delete_' + idCounter
+      deleteButton.classList.add('delete_button')
       outputAge.innerHTML = "Age: " + ageInput.value
       outputRelationship.innerHTML = "Relationship: " + relationshipInput.value
       outputSmoker.innerHTML = "Smoker? " + smokerInput.checked
@@ -40,6 +45,7 @@ addButton.addEventListener("click", (event) => {
       newPersonDiv.appendChild(outputRelationship)
       newPersonDiv.appendChild(outputAge)
       newPersonDiv.appendChild(outputSmoker)
+      newPersonDiv.appendChild(deleteButton)
       newPersonDiv.id = 'person ' + idCounter
       personObject.family.push({ id: idCounter, age: ageInput.value, relationship: relationshipInput.value, smoker: smokerInput.checked})
       ageInput.value = null
