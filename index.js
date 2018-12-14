@@ -13,6 +13,10 @@ const outputDiv = document.createElement("div")
 theDiv.appendChild(alert)
 theForm.appendChild(outputDiv)
 
+let idCounter = 0
+const personObject = { family: []
+}
+
 addButton.addEventListener("click", (event) => {
   console.log('Add Button Clicked')
   if(+ageInput.value <= 0) {
@@ -22,7 +26,7 @@ addButton.addEventListener("click", (event) => {
       alert.innerHTML = "Please select a relationship status."
       return false
   } else {
-      console.log(typeof(+ageInput.value))
+      idCounter++
       alert.innerHTML = ''
       let newPersonDiv = document.createElement("div")
       newPersonDiv.setAttribute("style", "border: 3px solid black;")
@@ -31,11 +35,17 @@ addButton.addEventListener("click", (event) => {
       let outputSmoker = document.createElement("p")
       outputAge.innerHTML = "Age: " + ageInput.value
       outputRelationship.innerHTML = "Relationship: " + relationshipInput.value
-      outputSmoker.innerHTML = "Smoker? " + smokerInput.value
+      outputSmoker.innerHTML = "Smoker? " + smokerInput.checked
       outputDiv.appendChild(newPersonDiv)
       newPersonDiv.appendChild(outputRelationship)
       newPersonDiv.appendChild(outputAge)
       newPersonDiv.appendChild(outputSmoker)
+      newPersonDiv.id = 'person ' + idCounter
+      personObject.family.push({ id: idCounter, age: ageInput.value, relationship: relationshipInput.value, smoker: smokerInput.checked})
+      ageInput.value = null
+      relationshipInput.value = null
+      smokerInput.checked = false
+      console.log(personObject)
   }
 })
 
